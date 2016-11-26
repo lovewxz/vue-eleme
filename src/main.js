@@ -4,9 +4,11 @@ import VueRouter from 'vue-router'
 import goods from 'components/goods/goods'
 import seller from 'components/seller/seller'
 import ratings from 'components/ratings/ratings'
+import Resource from 'vue-resource'
 
 import 'common/scss/index.scss'
 
+Vue.use(Resource)
 Vue.use(VueRouter)
 
 let app = Vue.extend(App)
