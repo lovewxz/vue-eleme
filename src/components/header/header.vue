@@ -251,6 +251,7 @@ export default {
     height: 100%;
     z-index: 101;
     transition: all 0.5s;
+    backdrop-filter: blur(10px);
     &.fade-transition {
       opacity: 1;
       background-color: rgba(7,17,27,0.8);
