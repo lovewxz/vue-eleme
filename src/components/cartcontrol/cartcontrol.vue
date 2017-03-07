@@ -8,7 +8,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import Vue from 'vue'
 
     export default {
@@ -41,7 +41,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
   .cartcontrol {
     font-size: 0;
     .cart-decrease,.cart-add {
@@ -66,7 +66,7 @@
         .inner {
           transform: rotate(180deg);
         }
-      } 
+      }
     }
     .cart-num {
       display: inline-block;
@@ -86,6 +86,6 @@
       color: rgb(0,160,220);
       line-height: 24px;
     }
-    
+
   }
 </style>

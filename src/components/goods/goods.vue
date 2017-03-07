@@ -14,7 +14,7 @@
             <li class="food-list food-list-hook" v-for="item in goods">
               <h1 class="title">{{item.name}}</h1>
               <ul>
-                <li class="food-item border-1px" v-for="food in item.foods">
+                <li class="food-item border-1px" v-for="food in item.foods" @click="selectFood(food, $event)">
                   <div class="icon">
                     <img :src="food.icon" :alt="food.name" width="57" height="57">
                   </div>
@@ -39,14 +39,15 @@
           </ul>
         </div>
         <shopcart v-ref:shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :selected-foods="selectedFoods"></shopcart>
+        <food :food="selectedFood" v-ref:food></food>
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import BScroll from 'better-scroll'
     import shopcart from 'components/shopcart/shopcart'
     import cartcontrol from 'components/cartcontrol/cartcontrol'
-
+    import food from 'components/food/food'
     const ERR_OK = 0
     export default {
       props: {
@@ -58,7 +59,8 @@
         return {
           goods: [],
           listHeight: [],
-          scrollY: 0
+          scrollY: 0,
+          selectedFood: {}
         }
       },
       created() {
@@ -106,6 +108,13 @@
           let el = foodList[index]
           this.foodsScroll.scrollToElement(el, 300)
         },
+        selectFood(food, event) {
+          if (!event._constructed) {
+            return
+          }
+          this.selectedFood = food
+          this.$refs.food.show()
+        },
         _initScroll() {
           this.menuScroll = new BScroll(this.$els.menuWrapper, {
             click: true
@@ -134,7 +143,8 @@
       },
       components: {
         shopcart,
-        cartcontrol
+        cartcontrol,
+        food
       },
       events: {
         'cart.add'(target) {
@@ -144,7 +154,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 @import '../../common/scss/mixin.scss';
 .goods {
     position: absolute;

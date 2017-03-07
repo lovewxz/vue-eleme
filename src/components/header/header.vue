@@ -65,13 +65,13 @@
           <div class="detail-close" @click="hideDetail">
             <i class="icon-close"></i>
           </div>
-        </div>		
+        </div>
     </div>
 </template>
 
 
 
-<script>
+<script type="text/ecmascript-6">
 import star from '../star/star'
 export default {
   props: {
@@ -101,7 +101,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
 @import '../../common/scss/mixin.scss';
 .header {
 	color: #fff;
@@ -121,7 +121,7 @@ export default {
 			color:#fff;
 			margin: 2px 0 2px 16px;
 			display: inline-block;
-			.title {	
+			.title {
 				.brand {
 					display: inline-block;
 					vertical-align: top;
@@ -194,7 +194,7 @@ export default {
       .count-num {
         vertical-align: top;
         font-size: 10px;
-        font-weight: 200; 
+        font-weight: 200;
       }
       .icon-keyboard_arrow_right {
         margin-left: 2px;
