@@ -45,7 +45,7 @@
     <div class="list-mask" v-show="listShow" transition="fade" @click="toggleList"></div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     import cartcontrol from 'components/cartcontrol/cartcontrol'
     import BScroll from 'better-scroll'
     export default {
@@ -217,7 +217,7 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
     @import "../../common/scss/mixin.scss";
     .shopcart {
       position: fixed;

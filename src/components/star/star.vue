@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
   const LENGTH = 5
   const CLS_ON = 'on'
   const CLS_HALF = 'half'
@@ -42,7 +42,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" rel="stylesheet/scss">
   @import '../../common/scss/mixin.scss';
 
   .star {
