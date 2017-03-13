@@ -37,15 +37,33 @@
         <h1 class="title">
           商品评价
         </h1>
-        <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc"></ratingselect>
+        <ratingselect :select-type="selectType" :only-content="onlyContent" :desc="desc"
+                      :ratings="food.ratings"></ratingselect>
+        <div class="rating-wrapper">
+          <ul v-show="food.ratings && food.ratings.length">
+            <li v-for="rating in food.ratings" class="rating-item">
+              <div class="user">
+                <span class="username">{{rating.username}}</span>
+                <img :src="rating.avatar" class="avatar" width="12" height="12">
+              </div>
+              <div class="time">{{rating.rateTime}}</div>
+              <p class="text">
+                <span
+                  :class="{'icon-thumb_up':rating.rateType === 0,'icon-thumb_down':rating.rateType === 1}"></span><span
+                class="detail">{{rating.text}}</span>
+              </p>
+            </li>
+          </ul>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-//  const POSITIVE = 0
-//  const NEGATIVE = 1
+  //  const POSITIVE = 0
+  //  const NEGATIVE = 1
   const ALL = 2
 
   import BScroll from 'better-scroll'
@@ -107,6 +125,8 @@
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+  @import '../../common/scss/mixin.scss';
+
   .food {
     position: fixed;
     left: 0;
@@ -230,6 +250,65 @@
           line-height: 14px;
           margin-top: 18px;
           margin-left: 18px;
+        }
+        .rating-wrapper {
+          .rating-item {
+            position: relative;
+            padding: 16px 0px;
+            margin: 0 18px;
+            @include border-1px(rgba(7, 17, 27, .1));
+            .user {
+              position: absolute;
+              right: 0px;
+              top: 18px;
+              font-size: 0;
+              .username {
+                display: inline-block;
+                vertical-align: top;
+                font-size: 10px;
+                color: rgb(147, 153, 159);
+                line-height: 12px;
+                margin-right: 6px;
+              }
+              .avatar {
+                display: inline-block;
+                vertical-align: top;
+                border-radius: 50%;
+              }
+            }
+            .time {
+              font-size: 10px;
+              line-height: 12px;
+              color: rgb(147, 153, 159)
+            }
+            .text {
+              margin-top: 6px;
+              font-size: 0px;
+              .icon-thumb_up {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 12px;
+                color: rgb(0, 160, 220);
+                line-height: 24px;
+                margin-right: 4px;
+              }
+              .icon-thumb_down {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 12px;
+                color: rgb(147, 153, 159);
+                line-height: 24px;
+                margin-right: 4px;
+              }
+              .detail {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 12px;
+                color: rgb(7, 17, 27);
+                line-height: 16px;
+              }
+            }
+          }
         }
       }
     }

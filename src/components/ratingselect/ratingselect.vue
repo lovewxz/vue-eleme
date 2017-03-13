@@ -1,11 +1,14 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type border-1px">
-      <span class="block all">{{desc.all}}<span class="count">57</span></span>
-      <span class="block positive">{{desc.positive}}<span class="count">47</span></span>
-      <span class="block negative">{{desc.negative}}<span class="count">10</span></span>
+      <span class="block all" :class="{'active':selectType===2}" @click="select(2,$event)">{{desc.all}}<span
+        class="count">{{ratings.length}}</span></span>
+      <span class="block positive" :class="{'active':selectType===1}" @click="select(1,$event)">{{desc.positive}}<span
+        class="count">{{positives.length}}</span></span>
+      <span class="block negative" :class="{'active':selectType===0}" @click="select(0,$event)">{{desc.negative}}<span
+        class="count">{{negatives.length}}</span></span>
     </div>
-    <div class="switch">
+    <div class="switch" :class="{'on': onlyContent}" @click="toggleContent">
       <span class="icon-check_circle"></span>
       <span class="text">只显示有内容的评价</span>
     </div>
@@ -13,8 +16,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  //  const POSITIVE = 0
-  //  const NEGATIVE = 1
+  const POSITIVE = 0
+  const NEGATIVE = 1
   const ALL = 2
 
   export default {
@@ -43,6 +46,34 @@
           }
         }
       }
+    },
+    computed: {
+      positives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === POSITIVE
+        })
+      },
+      negatives() {
+        return this.ratings.filter((rating) => {
+          return rating.rateType === NEGATIVE
+        })
+      }
+    },
+    methods: {
+      select(type, event) {
+        if (event._constructor) {
+          return
+        }
+        this.selectType = type
+        this.$dispatch('ratingtype.select', type)
+      },
+      toggleContent(event) {
+        if (event._constructor) {
+          return
+        }
+        this.onlyContent = !this.onlyContent
+        this.$dispatch('content.toggle', this.onlyContent)
+      }
     }
   }
 </script>
@@ -64,11 +95,52 @@
         padding: 8px 12px;
         margin-right: 8px;
         color: rgb(77, 85, 93);
-        background-color: rgba(0, 160, 220, .2);
+        border-radius: 1px;
         .count {
           font-size: 8px;
           margin-left: 2px;
         }
+        &.active {
+          color: #fff;
+        }
+        &.positive, &.all {
+          background-color: rgba(0, 160, 220, .2);
+          &.active {
+            background-color: rgb(0, 160, 220);
+          }
+        }
+        &.negative {
+          background-color: rgba(77, 85, 93, .2);
+          &.active {
+            background-color: rgb(77, 85, 93);
+          }
+        }
+      }
+    }
+    .switch {
+      color: rgb(147, 153, 159);
+      font-size: 0;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(7, 17, 27, .2);
+      padding-left: 18px;
+      &.on {
+        .icon-check_circle {
+          color: #00b43c;
+        }
+      }
+      .icon-check_circle {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 24px;
+        line-height: 24px;
+        color: rgb(147, 153, 159);
+        margin-right: 4px;
+      }
+      .text {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 12px;
+        line-height: 24px;
       }
     }
   }
