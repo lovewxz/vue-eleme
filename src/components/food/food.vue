@@ -46,7 +46,7 @@
                 <span class="username">{{rating.username}}</span>
                 <img :src="rating.avatar" class="avatar" width="12" height="12">
               </div>
-              <div class="time">{{rating.rateTime}}</div>
+              <div class="time">{{rating.rateTime | formateDate}}</div>
               <p class="text">
                 <span
                   :class="{'icon-thumb_up':rating.rateType === 0,'icon-thumb_down':rating.rateType === 1}"></span><span
@@ -54,7 +54,7 @@
               </p>
             </li>
           </ul>
-          <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
         </div>
       </div>
     </div>
@@ -71,6 +71,7 @@
   import Vue from 'Vue'
   import split from 'components/split/split'
   import ratingselect from 'components/ratingselect/ratingselect'
+  import {formateDate} from 'common/js/date'
 
   export default {
     props: {
@@ -138,6 +139,12 @@
         this.$nextTick(() => {
           this.scroll.refresh()
         })
+      }
+    },
+    filters: {
+      formateDate(time) {
+        let date = new Date(time)
+        return formateDate(date, 'yyyy-MM-dd hh:mm')
       }
     },
     components: {
@@ -332,6 +339,12 @@
                 line-height: 16px;
               }
             }
+          }
+          .no-rating {
+            margin-left: 18px;
+            font-size: 12px;
+            color: rgb(77, 85, 93);
+            padding: 12px 0;
           }
         }
       }
