@@ -28,6 +28,10 @@
             </div>
           </li>
         </ul>
+        <div class="favorite">
+          <i class="icon-favorite" :class="{'active': favorite}" @click="toggleFavorite($event)"></i>
+          <p class="text">{{favoriteText}}</p>
+        </div>
       </div>
       <split></split>
       <div class="bulletin-wrapper">
@@ -66,10 +70,23 @@
   import BScroll from 'better-scroll'
   import star from 'components/star/star'
   import split from 'components/split/split'
+  import {saveToLocal, loadFromLocal} from 'common/js/store'
   export default {
     props: {
       seller: {
         type: Object
+      }
+    },
+    data() {
+      return {
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, 'favorite', false)
+        })()
+      }
+    },
+    computed: {
+      favoriteText() {
+        return this.favorite ? '已收藏' : '收藏'
       }
     },
     created() {
@@ -112,6 +129,13 @@
             }
           })
         }
+      },
+      toggleFavorite(event) {
+        if (event._constructor) {
+          return
+        }
+        this.favorite = !this.favorite
+        saveToLocal(this.seller.id, 'favorite', this.favorite)
       }
     },
     components: {
@@ -132,6 +156,7 @@
     width: 100%;
     overflow: hidden;
     .overview {
+      position: relative;
       padding: 18px 0;
       margin: 0 18px;
       .title {
@@ -186,6 +211,28 @@
               font-weight: 200;
             }
           }
+        }
+      }
+      .favorite {
+        position: absolute;
+        width: 50px;
+        text-align: center;
+        right: 0px;
+        top: 14px;
+        .icon-favorite {
+          font-size: 24px;
+          line-height: 24px;
+          color: rgb(77, 85, 93);
+          margin-bottom: 4px;
+          display: block;
+          &.active {
+            color: rgb(240, 20, 20)
+          }
+        }
+        .text {
+          font-size: 10px;
+          color: rgb(77, 85, 93);
+          line-height: 10px;
         }
       }
     }
