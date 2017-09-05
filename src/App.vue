@@ -1,72 +1,38 @@
 <template>
-  <div id="app">
-    <v-header :seller="seller"></v-header>
-    <div class="tab border-1px">
-      <div class="tab-item">
-        <a v-link="{path: '/goods'}">商品</a>
-      </div>
-      <div class="tab-item">
-        <a v-link="{path: '/ratings'}">评论</a>
-      </div>
-      <div class="tab-item">
-        <a v-link="{path: '/seller'}">商家</a>
-      </div>
-    </div>
-    <router-view :seller="seller" keep-alive></router-view>
-  </div>
+<div id="app">
+  <tab :link="link"></tab>
+  <router-view></router-view>
+</div>
 </template>
 
-<script type="text/ecmascript-6">
-  import header from 'components/header/header'
-  import {urlParse} from 'common/js/util'
-  const ERR_OK = 0
-  export default {
-    data() {
-      return {
-        seller: {
-          id: (() => {
-            let queryParam = urlParse()
-            return queryParam.id
-          })()
+<script>
+import Tab from '@/base/tab/tab'
+
+export default {
+  data() {
+    return {
+      link: [
+        {
+          name: '商品',
+          url: '/goods'
+        },
+        {
+          name: '评论',
+          url: '/ratings'
+        },
+        {
+          name: '商家',
+          url: '/seller'
         }
-      }
-    },
-    created() {
-      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, response.data)
-        }
-      })
-    },
-    components: {
-      'v-header': header
+      ]
     }
+  },
+  components: {
+    Tab
   }
+}
 </script>
 
+<style>
 
-<style lang="scss" rel="stylesheet/scss">
-  @import './common/scss/mixin.scss';
-
-  .tab {
-    display: flex;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    @include border-1px(rgba(7, 17, 27, 0.1));
-    .tab-item {
-      flex: 1;
-      text-align: center;
-      & > a {
-        display: block;
-        font-size: 14px;
-        color: rgb(77, 85, 93);
-        &.active {
-          color: rgb(240, 20, 20);
-        }
-      }
-    }
-  }
 </style>
-

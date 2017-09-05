@@ -16,8 +16,8 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../common/scss/variable";
-@import "../../common/scss/mixin";
+@import "~common/scss/variable";
+@import "~common/scss/mixin";
 
 .tab {
     display: flex;
