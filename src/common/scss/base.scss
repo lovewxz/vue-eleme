@@ -4,7 +4,7 @@ body,html {
     font-family: 'PingFang SC','STHeitiSC-Light','Helvetica-Light','sans-serif';
 }
 
-.cf {
+.clearfix {
     display: inline-block;
     &::after {
         content: ".";
@@ -35,4 +35,3 @@ body,html {
         }
     }
 }
-
